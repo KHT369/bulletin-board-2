@@ -6,15 +6,13 @@ task({ :sample_data => :environment }) do
     Board.destroy_all
     Post.destroy_all
   end
-  
+
   if Rails.env.production?
-  ActiveRecord::Base.connection.tables.each do |t|
-    ActiveRecord::Base.connection.reset_pk_sequence!(t)
+    ActiveRecord::Base.connection.tables.each do |t|
+      ActiveRecord::Base.connection.reset_pk_sequence!(t)
+    end
   end
-
-  Board.destroy_all
-  Post.destroy_all
-
+  
   usernames = ["alice", "bob", "carol", "dave", "eve"]
 
   usernames.each do |username|
@@ -23,8 +21,9 @@ task({ :sample_data => :environment }) do
     user.email = "#{username}@example.com"
     user.password = "password"
     user.save
-  end
 
+  end
+  
   5.times do
     board = Board.new
     board.name = Faker::Address.community
@@ -46,5 +45,4 @@ task({ :sample_data => :environment }) do
   puts "There are now #{User.count} rows in the users table."
   puts "There are now #{Board.count} rows in the boards table."
   puts "There are now #{Post.count} rows in the posts table."
-  end
 end

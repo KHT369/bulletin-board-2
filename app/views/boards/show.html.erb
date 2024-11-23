@@ -58,7 +58,9 @@
 
   <% @active_posts.each do |a_post| %>
     <tr>
-      <td><%= a_post.title %></td>
+      <td><%= a_post.title %><% if a_post.user_id == current_user %> <!-- Check if the post belongs to the current user -->
+          <%= link_to "Delete post", delete_post_path(a_post), method: :delete, data: { confirm: "Are you sure?" } %>
+        <% end %></td>
       <td><%= a_post.body %></td>
       <td><%= a_post.created_at.strftime("%b %e, %Y") %></td>
       <td><%= a_post.expires_on.strftime("%b %e, %Y") %></td>
@@ -78,10 +80,13 @@
 
   <% @expired_posts.each do |a_post| %>
     <tr>
-      <td><%= a_post.title %></td>
+      <td><%= a_post.title %><% if a_post.user_id == current_user %> <!-- Check if the post belongs to the current user -->
+          <%= link_to "Delete post", delete_post_path(a_post), method: :delete, data: { confirm: "Are you sure?" } %>
+        <% end %></td>
       <td><%= a_post.body %></td>
       <td><%= a_post.created_at.strftime("%b %e, %Y") %></td>
       <td><%= a_post.expires_on.strftime("%b %e, %Y") %></td>
+     
     </tr>
   <% end %>
 </table>
