@@ -52,18 +52,10 @@ class PostsController < ApplicationController
 
   def destroy
     the_id = params.fetch("path_id")
-    the_post = Post.find_by(id: the_id)
-  
-    if the_post.nil?
-      redirect_to boards_path, alert: "Post not found."
-      return
-    end
-  
-    if current_user == the_post.user || current_user.admin?
-      the_post.destroy
-      redirect_to("/posts", notice: "Post deleted successfully.")
-    else
-      redirect_to boards_path, alert: "You are not authorized to delete this post."
-    end
-  end  
+    the_post = Post.where({ :id => the_id }).at(0)
+    the_board = the_post.board_id
+    the_post.destroy
+
+    redirect_to("/boards/#{the_board}", { :notice => "Post deleted successfully."} )
+  end
 end
