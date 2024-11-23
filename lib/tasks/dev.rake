@@ -46,4 +46,5 @@ task({ :sample_data => :environment }) do
   puts "There are now #{User.count} rows in the users table."
   puts "There are now #{Board.count} rows in the boards table."
   puts "There are now #{Post.count} rows in the posts table."
+  end
 end
